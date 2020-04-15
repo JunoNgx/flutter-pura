@@ -20,7 +20,6 @@ class ColorListLayout extends StatefulWidget {
 
 
   ColorListLayout({Key key, @required this.currentColorList}): super(key: key);
-//  ColorListLayout({this.currentColorList});
 
   @override
   _ColorListLayoutState createState() => _ColorListLayoutState();
@@ -31,27 +30,9 @@ class _ColorListLayoutState extends State<ColorListLayout> {
   @override
   void initState() {
     super.initState();
-//    print(DateTime.now().toString());
-//    print(DateFormat("yMd-Hms-").format(DateTime.now()));
 
     widget.currentColorList = new List();
     readLocalStorage();
-//    resetDefaultValues();
-
-//    buildColorListFromJson(widget.storage.retrieveDefaultValues());
-
-    //For debug, do not delete
-//    var jsonFileContent = "[{\"hex\":\"902E43\",\"name\":\"Dark Wine Red\",\"index\":0},{\"hex\":\"40826D\",\"name\":\"Viridian\",\"index\":1},{\"hex\":\"C8E6C9\",\"name\":\"Eraser\",\"index\":2},{\"hex\":\"FFCCC1\",\"name\":\"Salmon\",\"index\":3},{\"hex\":\"0080B0\",\"name\":\"Triumph Adler blue\",\"index\":4},{\"hex\":\"F1DDCF\",\"name\":\"Champagne pink\",\"index\":5},{\"hex\":\"E7CD8A\",\"name\":\"Light yellow\",\"index\":6},{\"hex\":\"FEF8EA\",\"name\":\"Light cream\",\"index\":7}]";
-//
-//
-//    var jsonContent = jsonDecode(jsonFileContent);
-//
-//    jsonContent.forEach((element){
-//      ColorObject newObject =  ColorObject(element["hex"], element["name"]);
-//      widget.currentColorList.add(newObject);
-//    });
-//
-//    widget.currentColorList = List.from(defaultValues);
   }
 
   @override
@@ -90,18 +71,17 @@ class _ColorListLayoutState extends State<ColorListLayout> {
 
 
             } else if (returnData == ConfirmAction.RESET_ALL){
-//              debugPrint('Reset all request recieved.');
-//              debugPrint(widget.currentColorList.toString());
-
               widget._homeScaffoldKey.currentState.showSnackBar(new SnackBar(
                   content: Text('All colours have been restored to default values.' ),
                   backgroundColor: Colors.grey[600],
                   duration: const Duration(seconds: 3)
                 )
               );
-              resetDefaultValues();
-              setState(() {});
+
+              // Learning note: await to make sure that data has been written into currentColorList before writing
+              await resetDefaultValues();
               writeLocalStorage();
+              setState(() {});
             }
 
           },
@@ -136,14 +116,12 @@ class _ColorListLayoutState extends State<ColorListLayout> {
   void writeLocalStorage() {
     String jsonContent = jsonEncode(widget.currentColorList);
     widget.storage.writeData(jsonContent);
-    print("storage written");
+    print("Storage data written");
   }
 
   void readLocalStorage() {
     buildColorListFromJson(widget.storage.readData());
     debugPrint('Data read from local storage');
-//    debugPrint('Data read from local storage' + jsonDecode(widget.storage.readData().toString()));
-//    showSnackbarDebug('data read from storage');
   }
 
   void resetDefaultValues() {
