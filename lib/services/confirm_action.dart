@@ -1,0 +1,1 @@
+enum ConfirmAction {CANCEL, SET_WALLPAPER, DELETE, RESET_ALL}
