@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wallpaper/services/color_object.dart';
-import 'package:wallpaper/layouts/screenshot_room.dart';
+import 'package:wallpaper/models/color_object.dart';
+import 'package:wallpaper/pages/screenshot_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:wallpaper/services/confirm_action.dart';
 
@@ -19,11 +19,6 @@ class ColorDetailDialog extends AlertDialog {
         key: _colorDetailScaffoldKey, // some kind of identifier for this particular scaffold, which will be used to control snackbar
         backgroundColor: Colors.transparent, // scaffold is actually fullscreen, but background is transparent
         body: AlertDialog(
-//        backgroundColor: Colors.grey[850],
-//        contentTextStyle: TextStyle(
-//        color: Colors.white,
-//            fontWeight: FontWeight.w400
-//        ),
         content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -34,7 +29,6 @@ class ColorDetailDialog extends AlertDialog {
                 label: Text('Permanently delete'),
                 onPressed: () {
                   Navigator.pop(context, {"confirmAction": ConfirmAction.DELETE, "indexToBeDeleted": index});
-//                  debugPrint({"confirmAction": ConfirmAction.DELETE, "indexToBeDeleted": this.index}.toString());
                 },
               ),
               Container(
@@ -49,12 +43,7 @@ class ColorDetailDialog extends AlertDialog {
                 )
               ),
               SizedBox(height: 20),
-              Text(color.name,
-//                  style: TextStyle(
-//                    fontSize: 20,
-//                    fontWeight: FontWeight.bold
-//                  )
-              ),
+              Text(color.name),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -93,11 +82,11 @@ class ColorDetailDialog extends AlertDialog {
                 onPressed: () async {
                   // Learning note: this will prompt permission from user
                   // Learning note: will do nothing if permission is already granted
-                  var permissionIsGranted = await Permission.storage.request();
+                  await Permission.storage.request();
                   if (await Permission.storage.isGranted) {
                     Navigator.push(context,
                         MaterialPageRoute(
-                            builder: (context) => ScreenshotRoom(color: this.color)
+                            builder: (context) => ScreenshotPage(color: this.color)
                         )
                     );
                   } else {

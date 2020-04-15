@@ -1,17 +1,15 @@
 import "package:flutter/material.dart";
-import "package:wallpaper/services/color_object.dart";
+import 'package:wallpaper/models/color_object.dart';
 import "package:wallpaper/services/confirm_action.dart";
-import "package:wallpaper/layouts/color_detail_dialog.dart";
-import "package:wallpaper/layouts/color_list_layout.dart";
-import 'package:wallpaper/services/confirm_action.dart';
+import "package:wallpaper/widgets/color_detail_dialog.dart";
 
-class ColorLayout extends StatelessWidget {
+class ColorGrid extends StatelessWidget {
 
   final ColorObject color;
   final int index;
   final ValueChanged<int> parentDeleteAndUpdate;
 
-  ColorLayout({Key key, @required this.color, @required this.parentDeleteAndUpdate, @required this.index}): super(key: key);
+  ColorGrid({Key key, @required this.color, @required this.parentDeleteAndUpdate, @required this.index}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +27,7 @@ class ColorLayout extends StatelessWidget {
           );
           if (returnData["confirmAction"] == ConfirmAction.DELETE) {
             this.parentDeleteAndUpdate(returnData["indexToBeDeleted"]);
-            print('index of delete' + returnData["indexToBeDeleted"].toString());
+            print('Color at position ' + returnData["indexToBeDeleted"].toString() + 'is to be deleted.');
           }
         },
         child: Align(
@@ -45,9 +43,6 @@ class ColorLayout extends StatelessWidget {
                   this.color.name,
                   style: TextStyle(
                     fontSize: 20,
-//                    color: Colors.red,
-//                    fontFamily: 'RobotoCondensed',
-//                    fontFamilyFallback: ['RobotoMono'],
                   )
               ),
             ),
@@ -56,13 +51,4 @@ class ColorLayout extends StatelessWidget {
       ),
     );
   }
-
-  Future<ConfirmAction> _showColorDetailDialog ({BuildContext context, Widget child}) async {
-    final value = await showDialog(
-      context: context,
-      barrierDismissible: true,
-        builder: (BuildContext context) => ColorDetailDialog(color: this.color)
-    );
-  }
-
 }

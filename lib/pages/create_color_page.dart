@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:wallpaper/services/color_object.dart';
 import 'package:wallpaper/services/confirm_action.dart';
 
-class CreateColorLayout extends StatefulWidget {
+class CreateColorPage extends StatefulWidget {
   @override
-  _CreateColorLayoutState createState() => _CreateColorLayoutState();
+  _CreateColorPageState createState() => _CreateColorPageState();
 }
 
-class _CreateColorLayoutState extends State<CreateColorLayout> {
+class _CreateColorPageState extends State<CreateColorPage> {
 
   double _red = 255;
   double _green = 255;
   double _blue = 255;
   String hexCode = "FFFFFF";
 
-  final nameFieldController = TextEditingController(text: 'Bright White');
+  final nameFieldController = TextEditingController(text: 'Maximum White');
   final hexFieldController = TextEditingController(text: 'FFFFFF');
   final _hexFormKey = GlobalKey<FormState>();
 
@@ -22,10 +21,6 @@ class _CreateColorLayoutState extends State<CreateColorLayout> {
   @override
   void initState() {
     super.initState();
-
-//    debugPrint(isAHexCode('DSFDSFD').toString());
-//    debugPrint(hexCodeValidator('1111FF11').toString());
-//    debugPrint(hexCodeValidator('1111FF').toString());
   }
 
   // Learning note: override to dispose of TextEditingController as well
@@ -39,11 +34,9 @@ class _CreateColorLayoutState extends State<CreateColorLayout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      backgroundColor: Colors.grey[850],
       appBar: AppBar(
         title: Text('Create a new color'),
         centerTitle: true,
-//        backgroundColor: Colors.grey[600],
       ),
       body: ListView(
         padding: const EdgeInsets.all(15.0),
@@ -64,7 +57,6 @@ class _CreateColorLayoutState extends State<CreateColorLayout> {
                 maxLength: 6,
                 maxLengthEnforced: true,
                 onChanged: (inputString) {
-                  debugPrint("changed");
                   if (_hexFormKey.currentState.validate()) {
                     _red = int.parse(inputString.substring(0,2), radix: 16).toDouble();
                     _green = int.parse(inputString.substring(2,4), radix: 16).toDouble();
@@ -74,13 +66,9 @@ class _CreateColorLayoutState extends State<CreateColorLayout> {
                   }
                 },
                 validator: (inputString) {
-                  //TODO figure out why validator isn't running
-                  debugPrint('Validating');
                   if (!isAHexCode(inputString)) {
-                    debugPrint('VAlidtor returned invalid');
                     return "Please enter a valid hex color";
                   }
-                    debugPrint('VAlidtor returned null');
                     return null;
                 },
                 textAlign: TextAlign.center,
@@ -183,10 +171,6 @@ class _CreateColorLayoutState extends State<CreateColorLayout> {
                 border: OutlineInputBorder(),
                 labelText: 'Color name',
                 hintText: 'Enter new color\'s name here',
-//                labelStyle: TextStyle(
-//                  color: Colors.white,
-//                ),
-//                fillColor: Colors.white,
               ),
             ),
           ),

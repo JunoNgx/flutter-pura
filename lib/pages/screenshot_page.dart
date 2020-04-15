@@ -6,15 +6,15 @@ import 'package:wallpaperplugin/wallpaperplugin.dart';
 import 'dart:typed_data';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:wallpaper/services/color_object.dart';
+import 'package:wallpaper/models/color_object.dart';
 import 'dart:ui' as ui;
 
-class ScreenshotRoom extends StatelessWidget {
+class ScreenshotPage extends StatelessWidget {
 
   final ColorObject color;
   final GlobalKey<ScaffoldState> _boundaryKey = new GlobalKey<ScaffoldState>();
 
-  ScreenshotRoom({Key key, @required this.color}): super(key: key);
+  ScreenshotPage({Key key, @required this.color}): super(key: key);
 
   @override
   // Learning note: immediately run the screenshot method after finished building
@@ -69,7 +69,7 @@ class ScreenshotRoom extends StatelessWidget {
     //Learning note: everything comes down to writing the file
     final File file = File(targetFolder + fileName);
     file.writeAsBytes(byteData2);
-    print('File saved: ' + targetFolder + fileName);
+    debugPrint('File saved: ' + targetFolder + fileName);
 
     Wallpaperplugin.setWallpaperWithCrop(localFile: targetFolder + fileName);
   }
