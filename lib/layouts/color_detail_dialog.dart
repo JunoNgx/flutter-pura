@@ -19,11 +19,11 @@ class ColorDetailDialog extends AlertDialog {
         key: _colorDetailScaffoldKey, // some kind of identifier for this particular scaffold, which will be used to control snackbar
         backgroundColor: Colors.transparent, // scaffold is actually fullscreen, but background is transparent
         body: AlertDialog(
-        backgroundColor: Colors.grey[850],
-        contentTextStyle: TextStyle(
-        color: Colors.white,
-            fontWeight: FontWeight.w400
-        ),
+//        backgroundColor: Colors.grey[850],
+//        contentTextStyle: TextStyle(
+//        color: Colors.white,
+//            fontWeight: FontWeight.w400
+//        ),
         content: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -42,13 +42,19 @@ class ColorDetailDialog extends AlertDialog {
                 height: 150,
                 margin: EdgeInsets.all(20),
               ),
-              Text('#' + color.hexCodeStr),
+              Text('#' + color.hexCodeStr,
+                style: TextStyle(
+                  fontFamily: "RobotoMono",
+                  fontSize: 20,
+                )
+              ),
               SizedBox(height: 20),
               Text(color.name,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                  )),
+//                  style: TextStyle(
+//                    fontSize: 20,
+//                    fontWeight: FontWeight.bold
+//                  )
+              ),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -116,115 +122,4 @@ class ColorDetailDialog extends AlertDialog {
       ),
     );
   }
-
-//  @override
-//  Widget build(BuildContext context) {
-//    // TODO: implement build
-//    return AlertDialog(
-//      backgroundColor: Colors.grey[850],
-//      contentTextStyle: TextStyle(
-//          color: Colors.white,
-////          fontSize: 16,
-//          fontWeight: FontWeight.w400
-//      ),
-//      content: Scaffold(
-//        key: _scaffoldKey,
-//        backgroundColor: Colors.grey[850],
-//        body: Column(
-//          mainAxisSize: MainAxisSize.min,
-//          children: <Widget>[
-//            RaisedButton.icon(
-//              color: Colors.pink,
-//              textColor: Colors.white,
-//              icon: Icon(Icons.delete_forever),
-//              label: Text('Permanently delete'),
-//              onPressed: () {
-//                //TODO remove color from current color list and save to local storage
-//
-//              },
-//            ),
-//            Container(
-//              color: Color(color.getHexInt()),
-//              height: 150,
-//              margin: EdgeInsets.all(20),
-//            ),
-//            Text('#' + color.hexCodeStr),
-//            SizedBox(height: 20),
-//            Text(color.name,
-//                style: TextStyle(
-//                  fontSize: 20,
-//                  fontWeight: FontWeight.bold
-//                )),
-//            SizedBox(height: 20),
-//            Row(
-//              mainAxisAlignment: MainAxisAlignment.center,
-//              children: <Widget>[
-//                Container(
-//                  height: 20,
-//                  width: 20,
-//                  color: Colors.red,
-//                ),
-//                SizedBox(width: 10),
-//                Text((int.parse(color.hexCodeStr.substring(0,2), radix: 16)).toString()),
-//                SizedBox(width: 30),
-//                Container(
-//                  height: 20,
-//                  width: 20,
-//                  color: Colors.green,
-//                ),
-//                SizedBox(width: 10),
-//                Text((int.parse(color.hexCodeStr.substring(2,4), radix: 16)).toString()),
-//                SizedBox(width: 30),
-//                Container(
-//                  height: 20,
-//                  width: 20,
-//                  color: Colors.blue,
-//                ),
-//                SizedBox(width: 10),
-//                Text((int.parse(color.hexCodeStr.substring(4,6), radix: 16)).toString()),
-//              ],
-//            ),
-//            SizedBox(height: 20),
-//            RaisedButton.icon(
-//              color: Colors.teal,
-//              textColor: Colors.white,
-//              icon: Icon(Icons.wallpaper),
-//              label: Text('Set Wallpaper'),
-//              onPressed: () async {
-//                var permissionIsGranted =  await Permission.storage.request();
-//                if (await Permission.storage.isGranted) {
-//                  Navigator.push(context,
-//                      MaterialPageRoute(
-//                          builder: (context) => ScreenshotRoom(color: this.color)
-//                      )
-//                  );
-//                } else {
-//                  //TODO snack: storage permission denied
-//                  print('Permission denied');
-//                  _scaffoldKey.currentState.showSnackBar(new SnackBar(
-//                    content: Text('Permission not granted. Wallpaper setting not available.')
-//                  ));
-////                  Scaffold.of(context).showSnackBar(new SnackBar(
-////                      content: Text('Permission not granted. Wallpaper setting not available.')
-////                  ));
-////                  var snackBar = new SnackBar(
-////                      content: Text('Permission not granted. Wallpaper setting not available.')
-////                  );
-//                }
-//              },
-//            ),
-//          ],
-//        ),
-//      ),
-//      actions: <Widget>[
-//        new FlatButton(
-//            child: Text('Cancel'),
-//            onPressed: () {
-//              Navigator.of(context).pop();
-//            }
-//        ),
-//      ],
-//    );
-//  }
-
 }

@@ -9,8 +9,14 @@ void main() {
 
   runApp(MaterialApp(
     home: ColorListLayout(),
-    theme: ThemeData(),
-    darkTheme: ThemeData.dark(),
+    theme: ThemeData(
+      brightness: Brightness.dark,
+      primaryColor: Colors.grey[600],
+      accentColor: Colors.teal,
+      scaffoldBackgroundColor: Colors.grey[800],
+      fontFamily: 'RobotoCondensed',
+//      fontFamilyFallback: ['RobotoMono'],
+    ),
     routes: {
       '/main': (context) => ColorListLayout(),
       '/create': (context) => CreateColorLayout(),

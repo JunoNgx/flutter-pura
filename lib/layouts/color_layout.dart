@@ -44,8 +44,10 @@ class ColorLayout extends StatelessWidget {
               child: Text(
                   this.color.name,
                   style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
+                    fontSize: 20,
+//                    color: Colors.red,
+//                    fontFamily: 'RobotoCondensed',
+//                    fontFamilyFallback: ['RobotoMono'],
                   )
               ),
             ),
@@ -62,76 +64,5 @@ class ColorLayout extends StatelessWidget {
         builder: (BuildContext context) => ColorDetailDialog(color: this.color)
     );
   }
-
-//  Future<Map> _showColorDetailDialog(BuildContext context) async {
-//    return showDialog<Map>(
-//        context: context,
-//        barrierDismissible: true,
-//        builder: (BuildContext context) {
-//          return ColorDetailDialog(color: this.color);
-//        }
-//    );
-//  }
-
-//  Widget build(BuildContext context) {
-//    return Container(
-//      margin: EdgeInsets.all(8),
-//      decoration: BoxDecoration(
-//        color: Color(this.color.getHexInt()),
-//      ),
-//      child: Stack(
-//        alignment: const Alignment(-1, 1),
-//        children: [
-//          FractionallySizedBox(
-//            widthFactor: 1,
-//            child: Container(
-//              decoration: BoxDecoration(
-//                color: Colors.black45,
-//              ),
-//              child: Padding(
-//                padding: const EdgeInsets.all(8.0),
-//                child: Text(
-//                  this.color.name,
-//                  style: TextStyle(
-//                    fontSize: 18,
-//                    color: Colors.white,
-//                  )
-//                ),
-//              ),
-//            ),
-//          ),
-//        ]
-//      ),
-//    );
-//  }
-
-
-//  Widget build(BuildContext context) {
-//    return Container(
-//      margin: EdgeInsets.all(8),
-//      decoration: BoxDecoration(
-//        color: Color(this.color.getHexInt()),
-//      ),
-//      child: Align(
-//        alignment: Alignment.bottomLeft,
-//        child: FractionallySizedBox(
-//          widthFactor: 1,
-//          child: Container(
-//            padding: const EdgeInsets.all(8.0),
-//            decoration: BoxDecoration(
-//              color: Colors.black45,
-//            ),
-//            child: Text(
-//              this.color.name,
-//              style: TextStyle(
-//                fontSize: 16,
-//                color: Colors.white,
-//              )
-//            ),
-//          ),
-//        ),
-//      ),
-//    );
-//  }
 
 }

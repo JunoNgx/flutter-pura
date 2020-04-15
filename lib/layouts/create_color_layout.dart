@@ -14,24 +14,36 @@ class _CreateColorLayoutState extends State<CreateColorLayout> {
   double _blue = 255;
   String hexCode = "FFFFFF";
 
-  final textEditController = TextEditingController(text: 'Summer blue');
+  final nameFieldController = TextEditingController(text: 'Bright White');
+  final hexFieldController = TextEditingController(text: 'FFFFFF');
+  final _hexFormKey = GlobalKey<FormState>();
 
+
+  @override
+  void initState() {
+    super.initState();
+
+//    debugPrint(isAHexCode('DSFDSFD').toString());
+//    debugPrint(hexCodeValidator('1111FF11').toString());
+//    debugPrint(hexCodeValidator('1111FF').toString());
+  }
 
   // Learning note: override to dispose of TextEditingController as well
   @override
   void dispose() {
     super.dispose();
-    textEditController.dispose();
+    nameFieldController.dispose();
+    hexFieldController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[850],
+//      backgroundColor: Colors.grey[850],
       appBar: AppBar(
         title: Text('Create a new color'),
         centerTitle: true,
-        backgroundColor: Colors.grey[600],
+//        backgroundColor: Colors.grey[600],
       ),
       body: ListView(
         padding: const EdgeInsets.all(15.0),
@@ -43,23 +55,41 @@ class _CreateColorLayoutState extends State<CreateColorLayout> {
               color: Color.fromRGBO(_red.round(), _green.round(), _blue.round(), 1),
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text('#' + hexCode,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 100),
+            child: Form(
+              key: _hexFormKey,
+              child: TextFormField(
+                controller: hexFieldController,
+                maxLength: 6,
+                maxLengthEnforced: true,
+                onChanged: (inputString) {
+                  debugPrint("changed");
+                  if (_hexFormKey.currentState.validate()) {
+                    _red = int.parse(inputString.substring(0,2), radix: 16).toDouble();
+                    _green = int.parse(inputString.substring(2,4), radix: 16).toDouble();
+                    _blue = int.parse(inputString.substring(4,6), radix: 16).toDouble();
+                    updateHexCode();
+                    setState(() {});
+                  }
+                },
+                validator: (inputString) {
+                  //TODO figure out why validator isn't running
+                  debugPrint('Validating');
+                  if (!isAHexCode(inputString)) {
+                    debugPrint('VAlidtor returned invalid');
+                    return "Please enter a valid hex color";
+                  }
+                    debugPrint('VAlidtor returned null');
+                    return null;
+                },
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w400,
+                  fontFamily: "RobotoMono",
                   fontSize: 20,
                 ),
               ),
-              Container(
-                width: 80,
-                child: TextFormField(
-
-                ),
-              ),
-            ],
+            ),
           ),
           Container(
             child: Row(
@@ -75,7 +105,7 @@ class _CreateColorLayoutState extends State<CreateColorLayout> {
                   min: 0,
                   max: 255,
                   divisions: 255,
-                  label: _red.round().toString(),
+                  label: "Red: " + _red.round().toString(),
                   onChanged: (value) {
                     setState(() {
                       _red = value;
@@ -100,7 +130,7 @@ class _CreateColorLayoutState extends State<CreateColorLayout> {
                 min: 0,
                 max: 255,
                 divisions: 255,
-                label: _green.round().toString(),
+                label: "Green: " + _green.round().toString(),
                 onChanged: (value) {
                   setState(() {
                     _green = value;
@@ -124,7 +154,7 @@ class _CreateColorLayoutState extends State<CreateColorLayout> {
                 min: 0,
                 max: 255,
                 divisions: 255,
-                label: _blue.round().toString(),
+                label: "Blue: " + _blue.round().toString(),
                 onChanged: (value) {
                   setState(() {
                     _blue = value;
@@ -147,16 +177,16 @@ class _CreateColorLayoutState extends State<CreateColorLayout> {
           SizedBox(height: 20),
           Center(
             child: TextField(
-              controller: textEditController, // Learning note: important identifier
+              controller: nameFieldController, // Learning note: important identifier
               obscureText: false,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Color name',
                 hintText: 'Enter new color\'s name here',
-                labelStyle: TextStyle(
-                  color: Colors.white,
-                ),
-                fillColor: Colors.white,
+//                labelStyle: TextStyle(
+//                  color: Colors.white,
+//                ),
+//                fillColor: Colors.white,
               ),
             ),
           ),
@@ -170,7 +200,9 @@ class _CreateColorLayoutState extends State<CreateColorLayout> {
                 icon: Icon(Icons.add),
                 label: Text('Create new color'),
                 onPressed: () {
-                  Navigator.pop(context, ({"hex": hexCode, "name": textEditController.text}));
+                  if (_hexFormKey.currentState.validate()) {
+                    Navigator.pop(context, ({"hex": hexCode, "name": nameFieldController.text}));
+                  }
                 },
               ),
             ],
@@ -195,6 +227,12 @@ class _CreateColorLayoutState extends State<CreateColorLayout> {
         _green.round().toRadixString(16) +
         _blue.round().toRadixString(16);
     hexCode = hexCode.toUpperCase();
-    debugPrint(hexCode);
+    hexFieldController.text = hexCode;
+  }
+
+  bool isAHexCode(String value) {
+    String pattern = "^[A-Fa-f0-9]{6}\$";
+    RegExp hexRegex = new RegExp(pattern);
+    return hexRegex.hasMatch(value);
   }
 }

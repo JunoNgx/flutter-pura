@@ -40,7 +40,7 @@ class _ColorListLayoutState extends State<ColorListLayout> {
     return SafeArea(
       child: Scaffold(
         key: widget._homeScaffoldKey,
-        backgroundColor: Colors.grey[850],
+//        backgroundColor: Colors.grey[850],
           body: GridView.builder(
             itemCount: widget.currentColorList.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

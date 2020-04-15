@@ -12,25 +12,33 @@ import 'dart:ui' as ui;
 class ScreenshotRoom extends StatelessWidget {
 
   final ColorObject color;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _boundaryKey = new GlobalKey<ScaffoldState>();
 
   ScreenshotRoom({Key key, @required this.color}): super(key: key);
 
   @override
+  // Learning note: immediately run the screenshot method after finished building
   Widget build(BuildContext context) {
-    return RepaintBoundary(
-        key: _scaffoldKey,
-        child: Scaffold(
-            backgroundColor: Color(color.getHexInt()),
-            floatingActionButton: FloatingActionButton(
-              onPressed:_takeScreenshot,
-            )
-        )
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      _takeScreenshot();
+    });
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Color(0xFF242424).withOpacity(0.2),
+      ),
+      body: RepaintBoundary(
+          key: _boundaryKey,
+          child: Scaffold(
+              backgroundColor: Color(color.getHexInt()),
+          )
+      ),
     );
   }
 
   void _takeScreenshot() async{
-    RenderRepaintBoundary boundary = _scaffoldKey.currentContext.findRenderObject();
+    RenderRepaintBoundary boundary = _boundaryKey.currentContext.findRenderObject();
 
     if (boundary.debugNeedsPaint) {
       print("Waiting for boundary to be painted.");
