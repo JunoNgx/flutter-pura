@@ -3,6 +3,7 @@ import 'package:wallpaper/models/color_object.dart';
 import 'package:wallpaper/pages/screenshot_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:wallpaper/services/confirm_action.dart';
+import 'package:wallpaper/widgets/confirmation_dialog.dart';
 
 class ColorDetailDialog extends AlertDialog {
 
@@ -27,8 +28,19 @@ class ColorDetailDialog extends AlertDialog {
                 textColor: Colors.white,
                 icon: Icon(Icons.delete_forever),
                 label: Text('Permanently delete'),
-                onPressed: () {
-                  Navigator.pop(context, {"confirmAction": ConfirmAction.DELETE, "indexToBeDeleted": index});
+                onPressed: () async {
+                  ConfirmAction confirmAction = await showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context) => ConfirmationDialog(
+                      title: 'CONFIRM DELETE ITEM',
+                      content: 'Are you sure you want to delete this color? Its data will be wiped.',
+                      confirmAction: ConfirmAction.DELETE,
+                    )
+                  );
+                  if (confirmAction == ConfirmAction.DELETE) {
+                    Navigator.pop(context, {"confirmAction": ConfirmAction.DELETE, "indexToBeDeleted": index});
+                  }
                 },
               ),
               Container(
