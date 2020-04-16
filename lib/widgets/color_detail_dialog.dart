@@ -97,13 +97,14 @@ class ColorDetailDialog extends AlertDialog {
                   // Learning note: will do nothing if permission is already granted
                   await Permission.storage.request();
                   if (await Permission.storage.isGranted) {
+                    print('Navigator pushing to screenshot page.');
                     Navigator.push(context,
                         MaterialPageRoute(
                             builder: (context) => ScreenshotPage(color: this.color)
                         )
                     );
                   } else {
-                    debugPrint('Permission denied');
+                    print('Pura was denied permission to external storage.');
                     _colorDetailScaffoldKey.currentState.showSnackBar(new SnackBar(
                       content: Text('Permission not granted. Wallpaper setting is not available.'),
                       backgroundColor: Colors.grey[600],
