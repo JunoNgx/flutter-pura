@@ -220,9 +220,12 @@ class _CreateColorPageState extends State<CreateColorPage> {
   }
 
   void updateHexCode() {
-    hexCode = _red.round().toRadixString(16) +
-        _green.round().toRadixString(16) +
-        _blue.round().toRadixString(16);
+//    hexCode = _red.round().toRadixString(16) +
+//        _green.round().toRadixString(16) +
+//        _blue.round().toRadixString(16);
+    hexCode = convertToTwoDigitHexStr(_red) +
+        convertToTwoDigitHexStr(_green) +
+        convertToTwoDigitHexStr(_blue);
     hexCode = hexCode.toUpperCase();
     hexFieldController.text = hexCode;
   }
@@ -231,5 +234,13 @@ class _CreateColorPageState extends State<CreateColorPage> {
     String pattern = "^[A-Fa-f0-9]{6}\$";
     RegExp hexRegex = new RegExp(pattern);
     return hexRegex.hasMatch(value);
+  }
+
+  String convertToTwoDigitHexStr(double value) {
+    String output = value.round().toRadixString(16);
+    if (output.length < 2) {
+      output = "0" + output;
+    }
+    return output;
   }
 }
