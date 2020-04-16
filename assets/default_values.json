@@ -17,18 +17,66 @@
   },
   {
     "hex": "0080B0",
-    "name": "Triumph Adler blue"
+    "name": "Triumph Adler"
   },
   {
     "hex": "F1DDCF",
-    "name": "Champagne pink"
+    "name": "Champagne Pink"
   },
   {
     "hex": "E7CD8A",
-    "name": "Light yellow"
+    "name": "Mellow"
   },
   {
     "hex": "FEF8EA",
-    "name": "Light cream"
+    "name": "Beige Cream"
+  },
+  {
+    "hex": "FD4659",
+    "name": "Watermelon"
+  },
+  {
+    "hex": "E91E63",
+    "name": "Fandango"
+  },
+  {
+    "hex": "DA70D6",
+    "name": "Orchid"
+  },
+  {
+    "hex": "688FB3",
+    "name": "ME Blue"
+  },
+  {
+    "hex": "00BCD4",
+    "name": "CMYK Lead"
+  },
+  {
+    "hex": "009688",
+    "name": "Classic Teal"
+  },
+  {
+    "hex": "BFFF00",
+    "name": "Lime"
+  },
+  {
+    "hex": "F88379",
+    "name": "Tea Rose"
+  },
+  {
+    "hex": "F28500",
+    "name": "Tangerine"
+  },
+  {
+    "hex": "9F8170",
+    "name": "Beaver"
+  },
+  {
+    "hex": "242424",
+    "name": "SL Dark"
+  },
+  {
+    "hex": "0070BB",
+    "name": "Spanish"
   }
 ]
