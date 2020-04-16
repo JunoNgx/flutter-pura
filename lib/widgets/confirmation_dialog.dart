@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:wallpaper/services/confirm_action.dart';
 
 class ConfirmationDialog extends StatelessWidget {

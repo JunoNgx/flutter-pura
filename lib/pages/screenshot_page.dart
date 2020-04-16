@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:intl/intl.dart';
-import 'package:wallpaperplugin/wallpaperplugin.dart';
-
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import 'package:wallpaperplugin/wallpaperplugin.dart';
 import 'package:wallpaper/models/color_object.dart';
-import 'dart:ui' as ui;
 
 class ScreenshotPage extends StatelessWidget {
 
@@ -68,7 +68,7 @@ class ScreenshotPage extends StatelessWidget {
 
     //Learning note: everything comes down to writing the file
     final File file = File(targetFolder + fileName);
-    file.writeAsBytes(byteData2);
+    await file.writeAsBytes(byteData2);
     debugPrint('File saved: ' + targetFolder + fileName);
 
     Wallpaperplugin.setWallpaperWithCrop(localFile: targetFolder + fileName);

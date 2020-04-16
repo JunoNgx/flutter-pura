@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import "package:flutter/material.dart";
+
 import 'package:wallpaper/widgets/color_grid.dart';
 import 'package:wallpaper/models/color_object.dart';
 import 'package:wallpaper/pages/create_color_page.dart';
@@ -39,7 +39,12 @@ class _ColorListPageState extends State<ColorListPage> {
               crossAxisCount: 2,
             ),
             itemBuilder: (context, index) {
-              return(ColorGrid(color: widget.currentColorList[index], parentDeleteAndUpdate: deleteAndUpdate, index: index)); // Learning note: according to StackOverflow
+              return(ColorGrid(
+                  color: widget.currentColorList[index],
+                  parentDeleteAndUpdate: deleteAndUpdate,
+                  index: index
+                )
+              );
             },
           ),
         floatingActionButton: FloatingActionButton(
@@ -85,13 +90,12 @@ class _ColorListPageState extends State<ColorListPage> {
       )
     );
     widget.currentColorList.removeAt(index);
-    setState(() {});
     writeLocalStorage();
+    setState(() {});
   }
 
   void writeLocalStorage() {
-    String jsonContent = jsonEncode(widget.currentColorList);
-    widget.storage.writeData(jsonContent);
+    widget.storage.writeData(jsonEncode(widget.currentColorList));
   }
 
   void readLocalStorage() {
@@ -104,6 +108,7 @@ class _ColorListPageState extends State<ColorListPage> {
   }
 
   void buildColorListFromJson(dynamic jsonResponse) async {
+    //TODO figure out if this can be optimised
     dynamic jsonRaw = await jsonResponse;
     List jsonContent = jsonDecode(jsonRaw);
 

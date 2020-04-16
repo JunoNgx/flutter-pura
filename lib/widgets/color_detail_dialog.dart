@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import 'package:wallpaper/models/color_object.dart';
 import 'package:wallpaper/pages/screenshot_page.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:wallpaper/services/confirm_action.dart';
 import 'package:wallpaper/widgets/confirmation_dialog.dart';
 

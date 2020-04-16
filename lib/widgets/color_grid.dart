@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+
 import 'package:wallpaper/models/color_object.dart';
 import "package:wallpaper/services/confirm_action.dart";
 import "package:wallpaper/widgets/color_detail_dialog.dart";
