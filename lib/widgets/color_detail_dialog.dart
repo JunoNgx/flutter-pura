@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:wallpaperplugin/wallpaperplugin.dart';
 
 import 'package:wallpaper/models/color_object.dart';
 import 'package:wallpaper/pages/screenshot_page.dart';
 import 'package:wallpaper/services/confirm_action.dart';
 import 'package:wallpaper/widgets/confirmation_dialog.dart';
+import 'package:wallpaper/services/image_processor.dart';
 
 class ColorDetailDialog extends AlertDialog {
 
   final ColorObject color;
   final int index;
   final GlobalKey<ScaffoldState> _colorDetailScaffoldKey = new GlobalKey<ScaffoldState>();
+  ImageProcessor imageProcessor = ImageProcessor();
 
   ColorDetailDialog({@required this.color, @required this.index});
 
@@ -112,12 +115,15 @@ class ColorDetailDialog extends AlertDialog {
                   // Learning note: will do nothing if permission is already granted
                   await Permission.storage.request();
                   if (await Permission.storage.isGranted) {
-                    print('Navigator pushing to screenshot page.');
-                    Navigator.push(context,
-                      MaterialPageRoute(
-                      builder: (context) => ScreenshotPage(color: this.color)
-                      )
-                    );
+//                    print('Navigator pushing to screenshot page.');
+//                    Navigator.push(context,
+//                      MaterialPageRoute(
+//                      builder: (context) => ScreenshotPage(color: this.color)
+//                      )
+//                    );
+                    print('Processing image');
+                    String filePath = await imageProcessor.processImage(color);
+                    setWallpaper(filePath);
                   } else {
                     print('Pura was denied permission to external storage.');
                     showDialog(
@@ -143,8 +149,12 @@ class ColorDetailDialog extends AlertDialog {
         ),
       );
   }
+//
+//  void processImage() {
+//    Image image = new
+//  }
 
-  void setWallpaper() {
-    print('Setting Wallpaper');
+  void setWallpaper(String filePath) {
+    Wallpaperplugin.setWallpaperWithCrop(localFile: filePath);
   }
 }
