@@ -78,5 +78,13 @@
   {
     "hex": "0070BB",
     "name": "Spanish"
+  },
+  {
+    "hex": "CAA483",
+    "name": "Not Pink"
+  },
+  {
+    "hex": "74A383",
+    "name": "Dark Minty"
   }
 ]
