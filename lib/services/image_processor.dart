@@ -20,11 +20,17 @@ class ImageProcessor {
     return finalPath;
   }
 
+  int workaroundConvertToBgr(String input) {
+    String _red = input.substring(0, 2);
+    String _green = input.substring(2, 4);
+    String _blue = input.substring(4, 6);
+    int output = int.parse("0xFF" + _blue + _green + _red);
+    return output;
+  }
+
   Future<String> processImage(ColorObject _color) async {
     dartImage.Image _image= new dartImage.Image.rgb(128, 128);
-    print(_color.hexCodeStr);
-    print(_color.getHexInt().toString());
-    // Learning note: from documentation, this appears to be in #AABBGGRR channel order
+    // Learning note: from the documentation, this appears to be in #AABBGGRR channel order
     // TODO find out how to use AARRGGBB channel instead
     int fixedColor = workaroundConvertToBgr(_color.hexCodeStr);
     _image.fill(fixedColor);
@@ -33,14 +39,6 @@ class ImageProcessor {
 
     Io.File(finalPath).writeAsBytesSync(dartImage.encodePng(_image));
     return finalPath;
-  }
-
-  int workaroundConvertToBgr(String input) {
-    String _red = input.substring(0, 2);
-    String _green = input.substring(2, 4);
-    String _blue = input.substring(4, 6);
-    int output = int.parse("0xFF" + _blue + _green + _red);
-    return output;
   }
 
 }

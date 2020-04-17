@@ -9,8 +9,16 @@ class ColorGrid extends StatelessWidget {
   final ColorObject color;
   final int index;
   final ValueChanged<int> parentDeleteAndUpdate;
+  final ValueChanged<ColorObject> parentCreateNewColor;
 
-  ColorGrid({Key key, @required this.color, @required this.parentDeleteAndUpdate, @required this.index}): super(key: key);
+  ColorGrid(
+      {Key key,
+        @required this.color,
+        @required this.index,
+        @required this.parentDeleteAndUpdate,
+        @required this.parentCreateNewColor
+      }
+  ): super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +37,9 @@ class ColorGrid extends StatelessWidget {
           if (returnData["confirmAction"] == ConfirmAction.DELETE) {
             this.parentDeleteAndUpdate(returnData["indexToBeDeleted"]);
             print('Color at position ' + returnData["indexToBeDeleted"].toString() + 'is to be deleted.');
+          }
+          if (returnData["confirmAction"] == ConfirmAction.CREATE) {
+            this.parentCreateNewColor(new ColorObject(returnData['hex'], returnData['name']));
           }
         },
         child: Align(

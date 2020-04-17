@@ -42,6 +42,7 @@ class _ColorListPageState extends State<ColorListPage> {
               return(ColorGrid(
                   color: widget.currentColorList[index],
                   parentDeleteAndUpdate: deleteAndUpdate,
+                  parentCreateNewColor: createNewColor,
                   index: index
                 )
               );
@@ -55,17 +56,12 @@ class _ColorListPageState extends State<ColorListPage> {
               context,
               MaterialPageRoute(builder: (context) => CreateColorPage())
             );
-            if (returnData is Map) {
-              widget.currentColorList.add(new ColorObject(returnData['hex'], returnData['name']));
-              showSnackbar('New color \'' + returnData['name'] + '\' has been created.');
-
+            if (returnData["confirmAction"] == ConfirmAction.CREATE) {
+              createNewColor(new ColorObject(returnData['hex'], returnData['name']));
             } else if (returnData == ConfirmAction.RESET_ALL){
               // Learning note: await to make sure that data has been written into currentColorList before writing
               await resetDefaultValues();
-              showSnackbar('All colours have been restored to default values.');
             }
-            writeLocalStorage();
-            setState(() {});
           },
         ),
       ),
@@ -73,9 +69,7 @@ class _ColorListPageState extends State<ColorListPage> {
   }
 
   void deleteAndUpdate(int index) {
-
     ColorObject tempHolder = widget.currentColorList[index];
-
     widget._homeScaffoldKey.currentState.showSnackBar(new SnackBar(
         content: Text('Color \'' + widget.currentColorList[index].name + '\' has been deleted.' ),
         backgroundColor: Colors.grey[600],
@@ -94,6 +88,13 @@ class _ColorListPageState extends State<ColorListPage> {
     setState(() {});
   }
 
+  void createNewColor(ColorObject color) {
+    widget.currentColorList.add(color);
+    showSnackbar('New color \'' + color.name + '\' has been created.');
+    writeLocalStorage();
+    setState(() {});
+  }
+
   void writeLocalStorage() {
     widget.storage.writeData(jsonEncode(widget.currentColorList));
   }
@@ -107,6 +108,7 @@ class _ColorListPageState extends State<ColorListPage> {
     // Learning note: wait for the new (old) data to be built before writing again
     await buildColorListFromJson(widget.storage.retrieveDefaultValues());
     writeLocalStorage();
+    showSnackbar('All colours have been restored to default values.');
   }
 
   void buildColorListFromJson(dynamic jsonResponse) async {

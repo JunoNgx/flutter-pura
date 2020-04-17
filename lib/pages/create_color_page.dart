@@ -4,8 +4,15 @@ import 'package:wallpaper/services/confirm_action.dart';
 import 'package:wallpaper/widgets/confirmation_dialog.dart';
 
 class CreateColorPage extends StatefulWidget {
+
+  final String initHexStr;
+  final String name;
+
   @override
   _CreateColorPageState createState() => _CreateColorPageState();
+
+  CreateColorPage({Key key, this.initHexStr = "FFFFFF", this.name = 'Maximum White'}): super(key: key);
+
 }
 
 class _CreateColorPageState extends State<CreateColorPage> {
@@ -13,16 +20,19 @@ class _CreateColorPageState extends State<CreateColorPage> {
   double _red = 255;
   double _green = 255;
   double _blue = 255;
-  String hexCode = "FFFFFF";
+  String hexCode;
 
-  final nameFieldController = TextEditingController(text: 'Maximum White');
-  final hexFieldController = TextEditingController(text: 'FFFFFF');
+  final nameFieldController = TextEditingController(text: '');
+  final hexFieldController = TextEditingController(text: '');
   final _hexFormKey = GlobalKey<FormState>();
 
 
   @override
   void initState() {
     super.initState();
+    hexCode = widget.initHexStr;
+    updateSlidersAndHexCode(widget.initHexStr);
+    nameFieldController.text = widget.name;
   }
 
   // Learning note: override to dispose of TextEditingController as well
@@ -60,10 +70,7 @@ class _CreateColorPageState extends State<CreateColorPage> {
                 maxLengthEnforced: true,
                 onChanged: (inputString) {
                   if (_hexFormKey.currentState.validate()) {
-                    _red = int.parse(inputString.substring(0,2), radix: 16).toDouble();
-                    _green = int.parse(inputString.substring(2,4), radix: 16).toDouble();
-                    _blue = int.parse(inputString.substring(4,6), radix: 16).toDouble();
-                    updateHexCode();
+                    updateSlidersAndHexCode(inputString);
                     setState(() {});
                   }
                 },
@@ -187,7 +194,7 @@ class _CreateColorPageState extends State<CreateColorPage> {
                 label: Text('Create new color'),
                 onPressed: () {
                   if (_hexFormKey.currentState.validate()) {
-                    Navigator.pop(context, ({"hex": hexCode, "name": nameFieldController.text}));
+                    Navigator.pop(context, ({"confirmAction": ConfirmAction.CREATE, "hex": hexCode, "name": nameFieldController.text}));
                   }
                 },
               ),
@@ -217,6 +224,13 @@ class _CreateColorPageState extends State<CreateColorPage> {
         ],
       ),
     );
+  }
+
+  void updateSlidersAndHexCode(String inputString) {
+    _red = int.parse(inputString.substring(0,2), radix: 16).toDouble();
+    _green = int.parse(inputString.substring(2,4), radix: 16).toDouble();
+    _blue = int.parse(inputString.substring(4,6), radix: 16).toDouble();
+    updateHexCode();
   }
 
   void updateHexCode() {
