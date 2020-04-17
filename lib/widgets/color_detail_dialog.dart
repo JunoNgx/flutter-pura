@@ -3,7 +3,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:wallpaperplugin/wallpaperplugin.dart';
 
 import 'package:wallpaper/models/color_object.dart';
-import 'package:wallpaper/pages/screenshot_page.dart';
 import 'package:wallpaper/services/confirm_action.dart';
 import 'package:wallpaper/widgets/confirmation_dialog.dart';
 import 'package:wallpaper/services/image_processor.dart';
@@ -101,47 +100,46 @@ class ColorDetailDialog extends AlertDialog {
               icon: Icon(Icons.wallpaper),
               label: Text('Set wallpaper'),
               onPressed: () async {
-                ConfirmAction confirmAction = await showDialog(
-                  context: context,
-                  barrierDismissible: true,
-                  builder: (BuildContext context) => ConfirmationDialog(
-                    title: 'CONFIRM SETTING WALLPAPER',
-                    content: 'Wallpaper will be set. Image writing on external storage will be required, please grant permission if you have not yet.',
-                    confirmAction: ConfirmAction.SET_WALLPAPER,
-                  )
-                );
-                if (confirmAction == ConfirmAction.SET_WALLPAPER) {
-                  // Learning note: this will prompt permission from user
-                  // Learning note: will do nothing if permission is already granted
-                  await Permission.storage.request();
-                  if (await Permission.storage.isGranted) {
+//                ConfirmAction confirmAction = await showDialog(
+//                  context: context,
+//                  barrierDismissible: true,
+//                  builder: (BuildContext context) => ConfirmationDialog(
+//                    title: 'CONFIRM SETTING WALLPAPER',
+//                    content: 'Wallpaper will be set. Image writing on external storage will be required, please grant permission if you have not yet.',
+//                    confirmAction: ConfirmAction.SET_WALLPAPER,
+//                  )
+//                );
+
+                // Learning note: this will prompt permission from user
+                // Learning note: will do nothing if permission is already granted
+                await Permission.storage.request();
+                if (await Permission.storage.isGranted) {
 //                    print('Navigator pushing to screenshot page.');
 //                    Navigator.push(context,
 //                      MaterialPageRoute(
 //                      builder: (context) => ScreenshotPage(color: this.color)
 //                      )
 //                    );
-                    print('Processing image');
-                    String filePath = await imageProcessor.processImage(color);
-                    setWallpaper(filePath);
-                  } else {
-                    print('Pura was denied permission to external storage.');
-                    showDialog(
-                      context: context,
-                      barrierDismissible: true,
-                      builder: (BuildContext context) => AlertDialog(
-                        content: Text('Permission has been denied. Wallpaper setting is not available.'),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('Okay'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          )
-                        ],
-                      )
-                    );
-                  }
+                  print('Processing image');
+                  String filePath = await imageProcessor.processImage(color);
+                  setWallpaper(filePath);
+                } else {
+                  print('Pura was denied permission to external storage.');
+                  showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context) => AlertDialog(
+                      content: Text('Permission has been denied. Wallpaper setting is not available.'),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text('Okay'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        )
+                      ],
+                    )
+                  );
                 }
               },
             ),

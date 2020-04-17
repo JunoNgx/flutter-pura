@@ -102,9 +102,11 @@ class _ColorListPageState extends State<ColorListPage> {
     buildColorListFromJson(widget.storage.readData());
   }
 
-  void resetDefaultValues() {
+  void resetDefaultValues() async {
     widget.currentColorList = new List();
-    buildColorListFromJson(widget.storage.retrieveDefaultValues());
+    // Learning note: wait for the new (old) data to be built before writing again
+    await buildColorListFromJson(widget.storage.retrieveDefaultValues());
+    writeLocalStorage();
   }
 
   void buildColorListFromJson(dynamic jsonResponse) async {
@@ -122,7 +124,7 @@ class _ColorListPageState extends State<ColorListPage> {
   void showSnackbar(String content) {
     widget._homeScaffoldKey.currentState.showSnackBar(new SnackBar(
         content: Text(content),
-        backgroundColor: Colors.grey[600],
+        backgroundColor: Colors.grey[400],
         duration: const Duration(seconds: 3),
       )
     );
