@@ -60,10 +60,6 @@ android {
         release {
             signingConfig signingConfigs.release
         }
-
-        release {
-            signingConfig signingConfigs.debug
-        }
     }
 }
 
