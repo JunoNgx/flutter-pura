@@ -16,24 +16,12 @@
     "name": "Salmon"
   },
   {
-    "hex": "0080B0",
-    "name": "Triumph Adler"
-  },
-  {
     "hex": "F1DDCF",
     "name": "Champagne Pink"
   },
   {
     "hex": "E7CD8A",
     "name": "Mellow"
-  },
-  {
-    "hex": "FEF8EA",
-    "name": "Beige Cream"
-  },
-  {
-    "hex": "FD4659",
-    "name": "Watermelon"
   },
   {
     "hex": "E91E63",
@@ -68,16 +56,12 @@
     "name": "Tangerine"
   },
   {
-    "hex": "9F8170",
-    "name": "Beaver"
-  },
-  {
     "hex": "242424",
     "name": "SL Dark"
   },
   {
-    "hex": "0070BB",
-    "name": "Spanish"
+    "hex": "546E7A",
+    "name": "Bluish Graphite"
   },
   {
     "hex": "CAA483",
@@ -86,5 +70,13 @@
   {
     "hex": "74A383",
     "name": "Dark Minty"
+  },
+  {
+    "hex": "FFB7C5",
+    "name": "Cherry Blossom"
+  },
+  {
+    "hex": "0D8ABA",
+    "name": "Emkyo Blue"
   }
 ]
