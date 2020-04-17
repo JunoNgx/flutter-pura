@@ -193,7 +193,7 @@ class _CreateColorPageState extends State<CreateColorPage> {
               ),
             ],
           ),
-          SizedBox(height: 60),
+          SizedBox(height: 0),
           RaisedButton.icon(
             color: Colors.pinkAccent,
             textColor: Colors.white,
