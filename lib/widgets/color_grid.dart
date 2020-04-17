@@ -16,7 +16,7 @@ class ColorGrid extends StatelessWidget {
         @required this.color,
         @required this.index,
         @required this.parentDeleteAndUpdate,
-        @required this.parentCreateNewColor
+        @required this.parentCreateNewColor,
       }
   ): super(key: key);
 

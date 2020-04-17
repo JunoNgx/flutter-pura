@@ -2,17 +2,24 @@ import 'package:flutter/material.dart';
 
 import 'package:wallpaper/services/confirm_action.dart';
 import 'package:wallpaper/widgets/confirmation_dialog.dart';
+import 'package:wallpaper/widgets/reset_all_button.dart';
 
 class CreateColorPage extends StatefulWidget {
 
   final String initHexStr;
   final String name;
+  final bool showResetAll; // Reset all button is only visible from accessing from the main page
 
   @override
   _CreateColorPageState createState() => _CreateColorPageState();
 
-  CreateColorPage({Key key, this.initHexStr = "FFFFFF", this.name = 'Maximum White'}): super(key: key);
-
+  CreateColorPage(
+      {Key key,
+        @required this.showResetAll,
+        this.initHexStr = "FFFFFF",
+        this.name = 'Maximum White',
+      }
+    ): super(key: key);
 }
 
 class _CreateColorPageState extends State<CreateColorPage> {
@@ -201,26 +208,7 @@ class _CreateColorPageState extends State<CreateColorPage> {
             ],
           ),
           SizedBox(height: 20),
-          RaisedButton.icon(
-            color: Colors.pinkAccent,
-            textColor: Colors.white,
-            icon: Icon(Icons.restore),
-            label: Text('RESET ALL COLOURS TO DEFAULT'),
-            onPressed: () async {
-              ConfirmAction confirm = await showDialog(
-                context: context,
-                barrierDismissible: true,
-                builder: (BuildContext context) => ConfirmationDialog(
-                  title: 'CONFIRM RESET ALL',
-                  content: 'Are you sure you want to reset all colors? All user created data will be wiped.',
-                  confirmAction: ConfirmAction.RESET_ALL,
-                )
-              );
-              if (confirm == ConfirmAction.RESET_ALL) {
-                Navigator.pop(context, ConfirmAction.RESET_ALL);
-              }
-            },
-          ),
+          ResetAllButton(widget.showResetAll),
         ],
       ),
     );

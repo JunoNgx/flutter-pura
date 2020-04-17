@@ -112,7 +112,13 @@ class ColorDetailDialog extends AlertDialog {
               label: Text('Clone Colour'),
               onPressed: () async {
                 var returnData = await Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => CreateColorPage(initHexStr: color.hexCodeStr, name: color.name))
+                  MaterialPageRoute(builder: (context)
+                    => CreateColorPage(
+                        initHexStr: color.hexCodeStr,
+                        name: color.name,
+                        showResetAll: false
+                    )
+                  )
                 );
                 if (returnData["confirmAction"] == ConfirmAction.CREATE) {
                   Navigator.pop(context, returnData);
@@ -138,19 +144,19 @@ class ColorDetailDialog extends AlertDialog {
     } else {
       print('Pura was denied permission to external storage.');
       showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (BuildContext context) => AlertDialog(
-            content: Text('Permission has been denied. Wallpaper setting is not available.'),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Okay'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          )
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) => AlertDialog(
+          content: Text('Permission has been denied. Wallpaper setting is not available.'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        )
       );
     }
   }

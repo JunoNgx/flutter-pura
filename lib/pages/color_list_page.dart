@@ -43,6 +43,7 @@ class _ColorListPageState extends State<ColorListPage> {
                   color: widget.currentColorList[index],
                   parentDeleteAndUpdate: deleteAndUpdate,
                   parentCreateNewColor: createNewColor,
+//                  parentResetAll: resetDefaultValues,
                   index: index
                 )
               );
@@ -54,11 +55,15 @@ class _ColorListPageState extends State<ColorListPage> {
           onPressed: () async {
             var returnData = await Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CreateColorPage())
+              MaterialPageRoute(builder: (context) => CreateColorPage(showResetAll: true,))
             );
-            if (returnData["confirmAction"] == ConfirmAction.CREATE) {
-              createNewColor(new ColorObject(returnData['hex'], returnData['name']));
-            } else if (returnData == ConfirmAction.RESET_ALL){
+            if (returnData is Map) {
+              if (returnData["confirmAction"] == ConfirmAction.CREATE) {
+                createNewColor(
+                    new ColorObject(returnData['hex'], returnData['name']));
+              }
+            } else if (returnData == ConfirmAction.RESET_ALL) {
+              print('Receiving RESET ALL from list page');
               // Learning note: await to make sure that data has been written into currentColorList before writing
               await resetDefaultValues();
             }
