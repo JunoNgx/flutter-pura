@@ -29,6 +29,11 @@ class _CreateColorPageState extends State<CreateColorPage> {
   double _blue = 255;
   String hexCode;
 
+  TextStyle numTextStyle = TextStyle(
+    fontFamily: "RobotoMono",
+    fontSize: 20
+  );
+
   final nameFieldController = TextEditingController(text: '');
   final hexFieldController = TextEditingController(text: '');
   final _hexFormKey = GlobalKey<FormState>();
@@ -88,10 +93,7 @@ class _CreateColorPageState extends State<CreateColorPage> {
                     return null;
                 },
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: "RobotoMono",
-                  fontSize: 20,
-                ),
+                style: numTextStyle
               ),
             ),
           ),
@@ -103,6 +105,12 @@ class _CreateColorPageState extends State<CreateColorPage> {
                   height: 20,
                   width: 20,
                   color: Colors.red,
+                ),
+                Container(
+                  width: 40,
+                  child: Text(_red.round().toString(),
+                      style: numTextStyle
+                  ),
                 ),
                 Slider(
                   value: _red,
@@ -129,6 +137,12 @@ class _CreateColorPageState extends State<CreateColorPage> {
                 width: 20,
                 color: Colors.green,
               ),
+              Container(
+                width: 40,
+                child: Text(_green.round().toString(),
+                    style: numTextStyle
+                ),
+              ),
               Slider(
                 value: _green,
                 min: 0,
@@ -153,6 +167,12 @@ class _CreateColorPageState extends State<CreateColorPage> {
                 width: 20,
                 color: Colors.blue,
               ),
+              Container(
+                width: 40,
+                child: Text(_blue.round().toString(),
+                    style: numTextStyle
+                ),
+              ),
               Slider(
                 value: _blue,
                 min: 0,
@@ -168,7 +188,7 @@ class _CreateColorPageState extends State<CreateColorPage> {
               ),
             ],
           ),
-
+          SizedBox(height: 10),
           Center(
             child: Text('Enter color name',
               style: TextStyle(

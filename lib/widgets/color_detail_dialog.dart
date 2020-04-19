@@ -109,7 +109,7 @@ class ColorDetailDialog extends AlertDialog {
               color: Colors.blue[700],
               textColor: Colors.white,
               icon: Icon(Icons.content_copy),
-              label: Text('Clone Colour'),
+              label: Text('Clone colour'),
               onPressed: () async {
                 var returnData = await Navigator.of(context).push(
                   MaterialPageRoute(builder: (context)
