@@ -138,27 +138,10 @@ class ColorDetailDialog extends AlertDialog {
     // Learning note: this will prompt permission from user
     // Learning note: will do nothing if permission is already granted
     await Permission.storage.request();
-    if (await Permission.storage.isGranted) {
-      String filePath = await imageProcessor.processImage(color);
-      setWallpaper(filePath);
-    } else {
-      print('Pura was denied permission to external storage.');
-      showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext context) => AlertDialog(
-          content: Text('Permission has been denied. Wallpaper setting is not available.'),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Okay'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        )
-      );
-    }
+    bool isPermissionGranted = await Permission.storage.isGranted;
+    print('Permission status: ' + isPermissionGranted.toString());
+    String filePath = await imageProcessor.processImage(color, isPermissionGranted);
+    setWallpaper(filePath);
   }
 
   void setWallpaper(String filePath) {

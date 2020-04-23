@@ -33,21 +33,28 @@ class _ColorListPageState extends State<ColorListPage> {
     return SafeArea(
       child: Scaffold(
         key: widget._homeScaffoldKey,
-          body: GridView.builder(
-            itemCount: widget.currentColorList.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-            ),
-            itemBuilder: (context, index) {
-              return(ColorGrid(
-                  color: widget.currentColorList[index],
-                  parentDeleteAndUpdate: deleteAndUpdate,
-                  parentCreateNewColor: createNewColor,
+          body: Column(
+            children: <Widget>[
+              Text('Nah'),
+              Expanded(
+                child: GridView.builder(
+                  itemCount: widget.currentColorList.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
+                  itemBuilder: (context, index) {
+                    return(ColorGrid(
+                        color: widget.currentColorList[index],
+                        parentDeleteAndUpdate: deleteAndUpdate,
+                        parentCreateNewColor: createNewColor,
 //                  parentResetAll: resetDefaultValues,
-                  index: index
-                )
-              );
-            },
+                        index: index
+                      )
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
