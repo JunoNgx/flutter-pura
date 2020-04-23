@@ -8,14 +8,12 @@ class CreateColorPage extends StatefulWidget {
 
   final String initHexStr;
   final String name;
-  final bool showResetAll; // Reset all button is only visible from accessing from the main page
 
   @override
   _CreateColorPageState createState() => _CreateColorPageState();
 
   CreateColorPage(
       {Key key,
-        @required this.showResetAll,
         this.initHexStr = "FFFFFF",
         this.name = 'Maximum White',
       }
@@ -230,8 +228,6 @@ class _CreateColorPageState extends State<CreateColorPage> {
               ),
             ],
           ),
-          SizedBox(height: 20),
-          ResetAllButton(widget.showResetAll),
         ],
       ),
     );

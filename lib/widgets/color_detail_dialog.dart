@@ -115,8 +115,7 @@ class ColorDetailDialog extends AlertDialog {
                   MaterialPageRoute(builder: (context)
                     => CreateColorPage(
                         initHexStr: color.hexCodeStr,
-                        name: color.name,
-                        showResetAll: false
+                        name: color.name
                     )
                   )
                 );
