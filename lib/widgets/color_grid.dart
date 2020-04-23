@@ -24,9 +24,10 @@ class ColorGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Color(this.color.getHexInt()),
-      ),
+//      decoration: BoxDecoration(
+//        color: Color(this.color.getHexInt()),
+//      ),
+      color: Color(this.color.getHexInt()),
       child: InkWell(
         onTap: () async {
           final Map returnData = await showDialog(

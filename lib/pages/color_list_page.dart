@@ -6,6 +6,9 @@ import 'package:wallpaper/models/color_object.dart';
 import 'package:wallpaper/pages/create_color_page.dart';
 import 'package:wallpaper/services/confirm_action.dart';
 import 'package:wallpaper/services/storage.dart';
+import 'package:wallpaper/widgets/create_grid.dart';
+import 'package:wallpaper/widgets/reset_grid.dart';
+import 'package:wallpaper/widgets/about_grid.dart';
 
 class ColorListPage extends StatefulWidget {
 
@@ -34,19 +37,26 @@ class _ColorListPageState extends State<ColorListPage> {
       child: Scaffold(
         key: widget._homeScaffoldKey,
           body: GridView.builder(
-            itemCount: widget.currentColorList.length,
+            itemCount: widget.currentColorList.length + 3,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
             ),
             itemBuilder: (context, index) {
-              return(ColorGrid(
-                  color: widget.currentColorList[index],
-                  parentDeleteAndUpdate: deleteAndUpdate,
-                  parentCreateNewColor: createNewColor,
+              if (index < widget.currentColorList.length) {
+                return(ColorGrid(
+                    color: widget.currentColorList[index],
+                    parentDeleteAndUpdate: deleteAndUpdate,
+                    parentCreateNewColor: createNewColor,
 //                  parentResetAll: resetDefaultValues,
-                  index: index
-                )
-              );
+                    index: index
+                ));
+              } else if (index == widget.currentColorList.length) {
+                return CreateGrid();
+              } else if (index == widget.currentColorList.length + 1) {
+                return ResetGrid();
+              } else if (index == widget.currentColorList.length + 2) {
+                return AboutGrid();
+              }
             },
           ),
         floatingActionButton: FloatingActionButton(
