@@ -1,17 +1,14 @@
 import 'dart:convert';
 import "package:flutter/material.dart";
 
-import 'package:wallpaper/widgets/color_grid.dart';
 import 'package:wallpaper/models/color_object.dart';
 import 'package:wallpaper/pages/create_color_page.dart';
 import 'package:wallpaper/services/confirm_action.dart';
 import 'package:wallpaper/services/storage.dart';
-import 'package:wallpaper/widgets/create_grid.dart';
-import 'package:wallpaper/widgets/reset_grid.dart';
-import 'package:wallpaper/widgets/about_grid.dart';
-
+import 'package:wallpaper/widgets/color_grid.dart';
 import 'package:wallpaper/widgets/extra_grid.dart';
 import 'package:wallpaper/widgets/confirmation_dialog.dart';
+import 'package:wallpaper/widgets/custom_about_dialog.dart';
 
 class ColorListPage extends StatefulWidget {
 
@@ -39,100 +36,76 @@ class _ColorListPageState extends State<ColorListPage> {
     return SafeArea(
       child: Scaffold(
         key: widget._homeScaffoldKey,
-          body: GridView.builder(
-            itemCount: widget.currentColorList.length + 3,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-            ),
-            itemBuilder: (context, index) {
-              Widget _widget;
-              if (index < widget.currentColorList.length) {
-                _widget = ColorGrid(
-                    color: widget.currentColorList[index],
-                    parentDeleteAndUpdate: deleteAndUpdate,
-                    parentCreateNewColor: createNewColor,
-//                  parentResetAll: resetDefaultValues,
-                    index: index
-                );
-              } else if (index == widget.currentColorList.length) {
-                _widget = ExtraGrid(
-                  icon: Icons.add,
-                  label: 'Create your new color from RGB sliders or a hex code',
-                  color: Colors.teal,
-                  action: () async {
-                    var returnData = await Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CreateColorPage())
-                    );
-                    if (returnData is Map) {
-                      if (returnData["confirmAction"] == ConfirmAction.CREATE) {
-                        createNewColor(
-                            new ColorObject(returnData['hex'], returnData['name']));
-                      }
+        body: GridView.builder(
+          itemCount: widget.currentColorList.length + 3,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
+          itemBuilder: (context, index) {
+            Widget _widget;
+            if (index < widget.currentColorList.length) {
+              _widget = ColorGrid(
+                  color: widget.currentColorList[index],
+                  parentDeleteAndUpdate: deleteAndUpdate,
+                  parentCreateNewColor: createNewColor,
+                  index: index
+              );
+            } else if (index == widget.currentColorList.length) {
+              _widget = ExtraGrid(
+                icon: Icons.add,
+                label: 'Create a new color from RGB sliders or a hex code',
+                color: Colors.teal,
+                action: () async {
+                  var returnData = await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CreateColorPage())
+                  );
+                  if (returnData is Map) {
+                    if (returnData["confirmAction"] == ConfirmAction.CREATE) {
+                      createNewColor(
+                          new ColorObject(returnData['hex'], returnData['name']));
                     }
-//                    else if (returnData == ConfirmAction.RESET_ALL) {
-//                      print('Receiving RESET ALL from list page');
-//                      // Learning note: await to make sure that data has been written into currentColorList before writing
-//                      await resetDefaultValues();
-//                    }
                   }
-                );
-              } else if (index == widget.currentColorList.length + 1) {
-                _widget = ExtraGrid(
-                    icon: Icons.restore,
-                    label: 'Reset all colors to default values',
-                    color: Colors.pinkAccent,
-                    action: () async {
-                      ConfirmAction confirm = await showDialog(
-                          context: context,
-                          barrierDismissible: true,
-                          builder: (BuildContext context) => ConfirmationDialog(
-                            title: 'CONFIRM RESET ALL',
-                            content: 'Are you sure you want to reset all colors? All user created data will be wiped.',
-                            confirmAction: ConfirmAction.RESET_ALL,
-                          )
-                      );
-                      if (confirm == ConfirmAction.RESET_ALL) {
-                        print('RESET_ALL sent from Create Page');
-                        resetDefaultValues();
-                      }
-                    },
-                );
-              } else if (index == widget.currentColorList.length + 2) {
-                _widget = ExtraGrid(
-                    icon: Icons.info,
-                    label: 'Help and information about the app',
-                    color: Colors.yellow[700],
-                    action: () {
-                      showDialog(
+                }
+              );
+            } else if (index == widget.currentColorList.length + 1) {
+              _widget = ExtraGrid(
+                  icon: Icons.restore,
+                  label: 'Reset all colors to default values',
+                  color: Colors.pinkAccent,
+                  action: () async {
+                    ConfirmAction confirm = await showDialog(
                         context: context,
                         barrierDismissible: true,
-
-                      );
+                        builder: (BuildContext context) => ConfirmationDialog(
+                          title: 'CONFIRM RESET ALL',
+                          content: 'Are you sure you want to reset all colors? All user created data will be wiped.',
+                          confirmAction: ConfirmAction.RESET_ALL,
+                        )
+                    );
+                    if (confirm == ConfirmAction.RESET_ALL) {
+                      print('RESET_ALL sent from Create Page');
+                      resetDefaultValues();
                     }
-                );
-              }
-              return _widget;
-            },
-          ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          tooltip: 'Create a new color',
-          onPressed: () async {
-//            var returnData = await Navigator.push(
-//              context,
-//              MaterialPageRoute(builder: (context) => CreateColorPage(showResetAll: true,))
-//            );
-//            if (returnData is Map) {
-//              if (returnData["confirmAction"] == ConfirmAction.CREATE) {
-//                createNewColor(
-//                    new ColorObject(returnData['hex'], returnData['name']));
-//              }
-//            } else if (returnData == ConfirmAction.RESET_ALL) {
-//              print('Receiving RESET ALL from list page');
-//              // Learning note: await to make sure that data has been written into currentColorList before writing
-//              await resetDefaultValues();
-//            }
+                  },
+              );
+            } else if (index == widget.currentColorList.length + 2) {
+              _widget = ExtraGrid(
+                  icon: Icons.info,
+                  label: 'Help and information about the app',
+                  color: Colors.yellow[700],
+                  action: () {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: true,
+                      builder: (context) => CustomAboutDialog()
+                        //TODO figure out how the default AboutDialog works
+//                      builder: (context) => AboutDialog()
+                    );
+                  }
+              );
+            }
+            return _widget;
           },
         ),
       ),

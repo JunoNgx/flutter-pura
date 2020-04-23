@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:wallpaper/services/confirm_action.dart';
-import 'package:wallpaper/widgets/confirmation_dialog.dart';
-import 'package:wallpaper/widgets/reset_all_button.dart';
 
 class CreateColorPage extends StatefulWidget {
 
@@ -71,7 +69,7 @@ class _CreateColorPageState extends State<CreateColorPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 100),
+            padding: const EdgeInsets.symmetric(horizontal: 135),
             child: Form(
               key: _hexFormKey,
               child: TextFormField(
@@ -89,7 +87,7 @@ class _CreateColorPageState extends State<CreateColorPage> {
                 },
                 validator: (inputString) {
                   if (!isAHexCode(inputString)) {
-                    return "Please enter a valid hex color";
+                    return "Invalid hex code";
                   }
                     return null;
                 },
@@ -129,7 +127,6 @@ class _CreateColorPageState extends State<CreateColorPage> {
               ],
             ),
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -241,9 +238,6 @@ class _CreateColorPageState extends State<CreateColorPage> {
   }
 
   void updateHexCode() {
-//    hexCode = _red.round().toRadixString(16) +
-//        _green.round().toRadixString(16) +
-//        _blue.round().toRadixString(16);
     hexCode = convertToTwoDigitHexStr(_red) +
         convertToTwoDigitHexStr(_green) +
         convertToTwoDigitHexStr(_blue);

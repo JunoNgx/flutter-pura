@@ -12,14 +12,12 @@ class ColorDetailDialog extends AlertDialog {
 
   final ColorObject color;
   final int index;
-  final GlobalKey<ScaffoldState> _colorDetailScaffoldKey = new GlobalKey<ScaffoldState>();
   ImageProcessor imageProcessor = ImageProcessor();
 
   ColorDetailDialog({@required this.color, @required this.index});
 
   @override
   Widget build(BuildContext context) {
-    // Learning note: Scaffold is top widget for the purpose of displaying snackbar fullscreen
         return AlertDialog(
           actions: <Widget>[
             new FlatButton(
@@ -128,10 +126,6 @@ class ColorDetailDialog extends AlertDialog {
         ),
       );
   }
-//
-//  void processImage() {
-//    Image image = new
-//  }
 
   void requestPermissionAndSetWallpaper(BuildContext context) async {
     // Learning note: this will prompt permission from user

@@ -11,7 +11,7 @@ description: Solid colour wallpaper
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.2+3
+version: 1.2.0+4
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -32,6 +32,7 @@ dev_dependencies:
   permission_handler: ^5.0.0
   path_provider: ^1.6.5
   wallpaperplugin: ^0.1.1
+  url_launcher: ^5.4.5
 
 
 
@@ -49,6 +50,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/default_values.json
+    - assets/Pura.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

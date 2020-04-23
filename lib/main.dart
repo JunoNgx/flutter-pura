@@ -3,6 +3,7 @@ import 'package:wallpaper/pages/color_list_page.dart';
 
 void main() {
   runApp(MaterialApp(
+    title: 'Pura',
     home: ColorListPage(),
     theme: ThemeData(
       brightness: Brightness.dark,
