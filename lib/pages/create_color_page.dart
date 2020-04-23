@@ -77,6 +77,9 @@ class _CreateColorPageState extends State<CreateColorPage> {
             child: Form(
               key: _hexFormKey,
               child: TextFormField(
+                decoration: InputDecoration(
+                  prefixText: '#',
+                ),
                 controller: hexFieldController,
                 maxLength: 6,
                 maxLengthEnforced: true,
