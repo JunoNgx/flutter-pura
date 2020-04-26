@@ -27,7 +27,7 @@ class _ColorListPageState extends State<ColorListPage> {
   void initState() {
     super.initState();
 
-    widget.currentColorList = new List();
+    initColorList();
     readLocalStorage();
   }
 
@@ -148,8 +148,9 @@ class _ColorListPageState extends State<ColorListPage> {
   }
 
   void resetDefaultValues() async {
-    widget.currentColorList = new List();
+    initColorList();
     // Learning note: wait for the new (old) data to be built before writing again
+    // else this will cause a blank userdata at the next startup
     await buildColorListFromJson(widget.storage.retrieveDefaultValues());
     writeLocalStorage();
     showSnackbar('All colours have been restored to default values.');
@@ -161,7 +162,7 @@ class _ColorListPageState extends State<ColorListPage> {
     List jsonContent = jsonDecode(jsonRaw);
 
     jsonContent.forEach((element){
-      ColorObject newObject =  ColorObject(element["hex"], element["name"]);
+      ColorObject newObject = ColorObject(element["hex"], element["name"]);
       widget.currentColorList.add(newObject);
     });
     setState((){});
@@ -174,6 +175,14 @@ class _ColorListPageState extends State<ColorListPage> {
         duration: const Duration(seconds: 3),
       )
     );
+  }
+
+  void initColorList() {
+    if (widget.currentColorList == null) {
+      widget.currentColorList = new List();
+    } else {
+      widget.currentColorList.removeRange(0, widget.currentColorList.length);
+    }
   }
 
 }
